@@ -1,0 +1,517 @@
+Course: COS360 - Otimização (ECI) + COM361 - Introd. à Otimização (ECA) - 2026/2 | Moodle PESC
+Skip to main content
+Ir para o conteúdo
+GovBR
+Comunica BR
+Acesso à informação
+Participe
+Legislação
+Órgãos do Governo
+Side panel
+More
+0
+Notifications
+You have no notifications
+See all
+0
+There are 0 unread conversations
+Profile
+Grades
+Calendar
+Private files
+Reports
+Preferences
+Language
+Log out
+Language selector
+English ‎(en)‎
+Português - Brasil ‎(pt_br)‎
+Expand all
+Collapse all
+Expand
+Collapse
+Informações Gerais
+Highlighted
+Announcements
+Duplas do projeto
+Expand
+Collapse
+Apresentação do curso
+Highlighted
+Introdução
+Intro
+Projeto
+Expand
+Collapse
+Programação Linear
+Highlighted
+LP01
+Quiz - PL
+Exercício - Método Gráfico
+Exercício Modelagem
+Quiz - Dualidade
+Expand
+Collapse
+Programação Convexa
+Highlighted
+Programação Convexa
+Expand
+Collapse
+Programação Não convexa e Combinatória
+Highlighted
+Prog. Não Convexa
+Quiz B&B
+Expand
+Collapse
+Detalhes
+Highlighted
+Métodos
+Quiz - PNL - Condições de otimalidade
+Quiz - PNL - Convexidade
+Blocks
+Skip Latest announcements
+Latest announcements
+11 November 2026, 10:49 AM
+Luidi Gelabert Simonetti
+Datas provas
+11 November 2026, 10:42 AM
+Luidi Gelabert Simonetti
+Escolha dos grupos do trabalho
+27 October 2026, 8:27 AM
+Luidi Gelabert Simonetti
+Aula 28/10
+19 October 2026, 8:20 AM
+Luidi Gelabert Simonetti
+Trabalho sala de aula
+28 September 2026, 8:09 AM
+Luidi Gelabert Simonetti
+SIAc
+Older topics
+...
+Open block drawer
+COS360 - Otimização (ECI) + COM361 - Introd. à Otimização (ECA) - 2026/2
+Course
+Participants
+Grades
+Activities
+Competencies
+More
+Unenrol me from this course
+Section outline
+Select section Informações Gerais
+Collapse
+Expand
+Informações Gerais
+Collapse all
+Expand all
+Sala: H325A - Seg e Qua de 08h às 10h.
+Na primeira aula combinaremos como será o curso.
+Atualizaremos o Moodle com as decisões tomadas.
+Para mais informações: luidisimonetti@poli.ufrj.br
+Sempre que mandar um e-mail, colocar no assunto a tag COS360.
+Select activity Announcements
+Announcements
+Forum
+Select activity Duplas do projeto
+Duplas do projeto
+Group choice
+Opened:
+Wednesday, 11 November 2026, 10:00 AM
+Closes:
+Monday, 16 November 2026, 9:00 AM
+Select section Apresentação do curso
+Collapse
+Expand
+Apresentação do curso
+Select activity Introdução
+Ementas:
+COS360
+Introdução aos problemas de otimização; 
+Minimização sem restrições: 
+Condições de otimalidade. 
+Minimização com restrições: condições de otimalidade. 
+Conjuntos e funções convexas. 
+Métodos iterativos para minimização irrestrita.
+Condições de Karish-Kuhn-Tucker. 
+Métodos para minimização restrita.
+COM361
+Método simplex, dualidade e sistemas em tempo discreto, 
+Métodos da direção conjugada, steepest descent, 
+Minimização com restrições ( condições de Kuhn-Tucker); 
+Métodos primal e das penalidades; sistemas lineares ótimos com critérios quadráticos LQ; 
+Programação dinâmica; formulação geral do problema de controle ótimo;
+Princípio de Pontryagin. 
+Aplicação a resolução de problemas de Engenharia.
+Apresentação
+Slides seguira o curso do Prof. Laurent Lessard da Universidade de Winconsin-Madison (
+Link
+).
+Select activity Intro
+Bibliografia
+Não seguiremos nenhum livro. Entretanto, existem diversas boas referencias.
+S. Boyd and L. Vandenberghe. Convex Optimization. 
+Cambridge University Press, 2004.
+http://stanford.edu/∼boyd/cvxbook/
+.
+H.P. Williams. Model Building in Mathematical 
+Programming, 5th Edition. Wiley, 2013.
+R.L. Rardin. Optimization in Operations Research. 
+Prentice Hall, 1998. 
+Otimização Linear - 
+Autores: N. Maculan e M. Fampa - Editora UnB - Download: 
+https://moodle.cos.ufrj.br/pluginfile.php/67654/mod_label/intro/Maculan_Fampa.pdf
+Programação  Linear - Autores: Ana Flavia Macambira, N. Maculan, L. Cabral e L. Pinto - Editora UFPB - Download: 
+https://moodle.cos.ufrj.br/pluginfile.php/67654/mod_label/intro/Livro_Programacao_Linear_UzedaMacambira_Maculan_Fromiga%20Cabral_LimaPinto.pdf
+Linear Programming and Network Flows - 
+Autores: M.S. Bazaraa, J.J. Jarvis e H.D. Sherali - Editora Wiley
+Linear Programming - 
+Autores: V. Chvátal - Editora W.H. Freeman
+Linear Programming - 
+Autores: G. B. Dantzig e M.N. Thapa - Editora Springer
+Nonlinear Programming: Theory and Algorithms - 
+Autores: Bazaraa, M.S. & Shetty C.M. - John Wiley & Sons, 1979.
+Theory of Linear and Integer Programming - 
+Autores: Alexander Schrijver - Editora Wiley
+Elementos de Programação Não-Linear - 
+Autores: Friedlander, A. - Editora da UNICAMP, 1994.
+Introduction to linear and nonlinear programming (New: linear and nonlinear programming) - 
+Autores: David G. Luenberger
+Otimização Contínua - A
+utores: Ademir Alves Ribeiro & Elizabeth Wegner Karas 
+Tópicos em otimização inteira - Editores: A. F. Macambira, L. G. Simonetti, R. F. Rodrigues, N. Maculan. Editora UFRJ. Download: 
+http://hdl.handle.net/11422/19343
+Introdução
+Slides:
+ 
+1- intro.pdf
+ - 
+2 - intro.pdf
+Select activity Projeto
+Projeto:
+Link:
+COS360_Projeto.pdf
+ 
+Apresentação
+Cada grupo tem 10 minutos para apresentar.
+Se um grupo não conseguir apresentar no dia agendado por falta de tempo (caso não seja culpa do grupo), apresentará na aula seguinte (limite ?/12).
+Se algum grupo não preencheu ou não está listado. Deve apresentar no dia ?.
+Select section Programação Linear
+Collapse
+Expand
+Programação Linear
+Select activity LP01
+Slides:
+ 
+3 - Linear programs.pdf
+Revisão Álgebra Linear
+Intuição Geométrica
+Formato Padrão LP
+Slides:
+ 
+4-minimax_planning.pdf
+Otimizando função linear por partes
+Problemas Minimax
+Planejamento Multi Períodos.
+Slides:
+5-network_flow_problems.pdf
+Problema de fluxo de custo mínimo
+Problema de Transporte
+Problema do Caminho Mais curso/longo
+Problema de Fluxo Máximo
+Soluções Inteiras
+Slides:
+ 
+6-LP_dualidade.pdf
+Estimando limites LP
+Dualidade LP
+Sensibilidade e preço marginal
+Folga complementar
+Slides:
+ 
+7-dual_flow_alg.pdf
+Dual do Fluxo de custo mínimo
+Problemas de Fluxo Max
+Algoritmos para LP
+Select activity Quiz - PL
+Quiz - PL
+Opened:
+Monday, 7 September 2026, 9:59 AM
+Closed:
+Sunday, 20 September 2026, 11:59 PM
+Select activity Exercício - Método Gráfico
+Exercício - Método Gráfico
+Assignment
+Opened:
+Monday, 7 September 2026, 11:59 PM
+Due:
+Sunday, 27 September 2026, 11:59 PM
+Select activity Exercício Modelagem
+Exercício Modelagem
+Assignment
+Opened:
+Tuesday, 8 September 2026, 11:59 PM
+Due:
+Sunday, 27 September 2026, 11:59 PM
+Select activity Quiz - Dualidade
+Quiz - Dualidade
+Opened:
+Monday, 7 September 2026, 9:59 AM
+Closed:
+Sunday, 27 September 2026, 11:59 PM
+Select section Programação Convexa
+Collapse
+Expand
+Programação Convexa
+Select activity Programação Convexa
+Slides:
+ 
+8-LeastSquare.pdf
+Mínimos quadrados
+Ajuste de curva
+Normas de vetores
+Slides:
+ 
+9 - equality constraints and tradeoffs.pdf
+Restrições de igualdade e compensações
+Mínimos quadrados de norma mínima
+Mínimos quadrados com restrições de igualdade
+Compensações ótimas
+Slides:
+ 
+10 - regularization.pdf
+Regularização
+Efeito do uso de diferentes normas
+Slides:
+ 
+11 - quadratic forms and ellipsoids.pdf
+Formas quadráticas e elipsoides
+Decomposição ortogonal
+Matrizes definidas positivas
+Slides:
+ 
+12 - QPs and QCQPs.pdf
+Programas Quadráticos (QPs) e Programas Quadráticos com Restrições Quadráticas (QCQPs)
+Elipsoides
+Programas quadráticos convexos
+Slides:
+ 
+13 - cones and semidefinite constraints.pdf
+Cones e restrições semidefinidas
+Geometria de cones
+Programas de cone de segunda ordem
+Restrições semidefinidas
+Slides:
+ 
+14 - convex programming.pdf
+Programação convexa
+Conjuntos e funções convexas
+Hierarquia de complexidade
+Slides:
+ 
+15 - duality.pdf
+Dualidade
+Limites superiores e inferiores
+Dualidade geral
+Qualificações de restrição
+Folga complementar
+Análise de sensibilidade
+Slides:
+ 
+16 - review of convex optimization.pdf
+Revisão de Otimização Convexa
+Select section Programação Não convexa e Combinatória
+Collapse
+Expand
+Programação Não convexa e Combinatória
+Select activity Prog. Não Convexa
+Slides:
+ 
+17 - intro to nonconvex models.pdf
+Introdução a modelos não convexos
+Modelos discretos
+Programação mista inteira
+Slides:
+ 
+18 - rounding and relaxation.pdf
+Arredondamento e relaxamento
+Problemas de decisão
+Desempenho e o futuro
+Relaxamento convexo
+Fecho convexo
+Slides:
+ 
+19 - fixed costs and variable bounds.pdf
+Custos fixos e limites de variáveis
+Lógica e o Método Big M
+Slides:
+ 
+20 - logic constraints and integer variables.pdf
+Restrições lógicas, variáveis inteiras
+Restrição If-then
+Restrições lógicas
+Relaxamento convexo
+Modelagem de um conjunto restrito de valores
+Slides:
+ 
+21 - set cover and TSP.pdf
+Cobertura de conjunto e TSP (Problema do Caixeiro Viajante)
+Problemas de corte e geração de colunas
+Slides:
+ 
+22 - more models, QAP and SOS.pdf
+Mais modelos, QAP e SOS
+Problemas de atribuição quadrática
+Restrições SOS1 e SOS2
+Funções lineares por partes gerais
+Slides:
+ 
+23 - cutting planes, branch and bound.pdf
+Planos de corte e branch & bound
+Algoritmos para resolver MIPs (Programação Mista Inteira)
+Métodos de planos de corte
+Métodos de branch and bound
+Slides:
+ 
+24 - nonlinear programming.pdf
+Programação não linear
+Slides:
+ 
+25 - NLP algorithms.pdf
+Algoritmos de PNL (Programação Não Linear)
+Métodos locais
+Otimização com restrições
+Métodos globais
+Métodos de caixa-preta
+Select activity Quiz B&amp;B
+Quiz B&B
+Opened:
+Wednesday, 11 November 2026, 8:00 AM
+Closes:
+Wednesday, 18 November 2026, 11:59 PM
+Done
+Select section Detalhes
+Collapse
+Expand
+Detalhes
+Select activity Métodos
+Programação Linear
+Slides:
+ 
+COS360_PL1.pdf
+Exemplo:
+ 
+COS360_PL_Ex.pdf
+Slides:
+ 
+COS360_PL2.pdf
+Programação Não Linear
+Slides:
+ 
+COS360_PNL1.pdf - Irrestrito - Condições de Otimalidade
+Slides:
+ 
+COS360_PNL2.pdf - Irrestrito - Algoritmos
+Slides:
+ 
+COS360_PNL3.pdf - Restrito - Condições de Otimalidade
+Slides:
+ 
+COS360_NL_penalidade.pdf - Restrito - Métodos de Penalidade
+Slides:
+ 
+COS360_NL_PQS.pdf - Restrito - Algoritmo PQS
+Select activity Quiz - PNL - Condições de otimalidade
+Quiz - PNL - Condições de otimalidade
+Opened:
+Wednesday, 11 November 2026, 8:00 AM
+Closes:
+Wednesday, 18 November 2026, 11:59 PM
+Done
+Select activity Quiz - PNL - Convexidade
+Quiz - PNL - Convexidade
+Opened:
+Wednesday, 11 November 2026, 8:00 AM
+Closed:
+Sunday, 15 November 2026, 11:59 PM
+Done
+Contact site support
+You are logged in as
+Gabriel Nobre
+(
+Log out
+)
+Reset user tour on this page
+Data retention summary
+Get the mobile app
+Powered by
+Moodle
+Messaging
+Contacts
+Messages selected:
+1
+Search people and messages
+Contacts
+0
+There are 0 pending contact requests
+Search people and messages
+Settings
+Contacts
+Requests
+0
+There are 0 pending contact requests
+No contacts
+No contact requests
+Contact request sent
+Personal space
+Save draft messages, links, notes etc. to access later.
+Cannot send messages
+You do not have permission to send messages in this conversation
+Delete for me and for everyone else
+Block
+Unblock
+Remove
+Add
+Delete
+Delete
+Send contact request
+Accept and add to contacts
+Decline
+OK
+Cancel
+Starred
+(
+)
+total conversations
+There are  unread conversations
+No starred conversations
+Group
+(
+)
+total conversations
+There are  unread conversations
+No group conversations
+Private
+(
+)
+total conversations
+There are  unread conversations
+No private conversations
+Contacts
+Non-contacts
+Load more
+Messages
+Load more
+No results
+Search people and messages
+Privacy
+You can restrict who can message you
+Accept messages from:
+My contacts only
+My contacts and anyone in my courses
+Notification preferences
+Use enter to send
+Delete selected messages
+Send contact request
+You have blocked this user.
+Unblock user
+See all

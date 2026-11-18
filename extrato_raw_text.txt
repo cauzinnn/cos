@@ -1,0 +1,515 @@
+CPF 144.871.377-30 / Conta 57100470
+Extrato de posição em 09/11/2026
+Posição Consolidada
+Extrato de posição referente a 09/11/2026
+
+CPF 144.871.377-30 / Conta 57100470
+Extrato de posição em 09/11/2026
+Gabriel Cauzin Nobre Pinto
+Solicitado no dia 16/11/2026 às 13:30
+Posição Total R$ 111.985,70
+
+CPF 144.871.377-30 / Conta 57100470
+Extrato de posição em 09/11/2026
+Seu patrimônio atual
+R$ 111.985,70
+Renda Variável
+R$ 46.611,64
+Renda Fixa
+R$ 9.497,82
+Previdência
+R$ 55.876,24
+Extrato de posição em 09/11/2026
+
+Distribuição da carteira
+Aqui você acompanha a organização da sua carteira, visualizando a
+distribuição das posições por ativo.
+Renda Variável
+Valor Bruto
+R$ 46.611,64
+BBAS3
+Quantidade
+Valor Bruto (R$)
+30
+R$ 510,60
+XPML11
+Quantidade
+Valor Bruto (R$)
+3
+R$ 288,00
+KNIP11
+Quantidade
+Valor Bruto (R$)
+5
+R$ 430,60
+OBTC3
+Quantidade
+Valor Bruto (R$)
+180
+R$ 1.204,20
+PCAR3
+Quantidade
+Valor Bruto (R$)
+3
+R$ 7,29
+URPR11
+Quantidade
+Valor Bruto (R$)
+7
+R$ 115,57
+VISC11
+Quantidade
+Valor Bruto (R$)
+4
+R$ 393,12
+CPF 144.871.377-30 / Conta 57100470
+Extrato de posição em 09/11/2026
+41,62%
+
+GPUS11
+Quantidade
+Valor Bruto (R$)
+30
+R$ 3.779,70
+KNCR11
+Quantidade
+Valor Bruto (R$)
+8
+R$ 819,84
+BHIA3
+Quantidade
+Valor Bruto (R$)
+3
+R$ 2,16
+MBRF3
+Quantidade
+Valor Bruto (R$)
+25
+R$ 440,25
+SMAL11
+Quantidade
+Valor Bruto (R$)
+14
+R$ 1.396,36
+BBIG11
+Quantidade
+Valor Bruto (R$)
+100
+R$ 505,00
+TGAR11
+Quantidade
+Valor Bruto (R$)
+2
+R$ 64,10
+IRIM11
+Quantidade
+Valor Bruto (R$)
+17
+R$ 1.012,01
+SPXI11
+Quantidade
+Valor Bruto (R$)
+27
+R$ 1.544,40
+NVDC34
+CPF 144.871.377-30 / Conta 57100470
+Extrato de posição em 09/11/2026
+
+Quantidade
+Valor Bruto (R$)
+23
+R$ 471,27
+VWRA11
+Quantidade
+Valor Bruto (R$)
+16
+R$ 1.909,28
+JSRE11
+Quantidade
+Valor Bruto (R$)
+10
+R$ 567,90
+VRTA11
+Quantidade
+Valor Bruto (R$)
+7
+R$ 450,45
+ASAI3
+Quantidade
+Valor Bruto (R$)
+20
+R$ 179,60
+GOLD11
+Quantidade
+Valor Bruto (R$)
+21
+R$ 496,65
+MCCI11
+Quantidade
+Valor Bruto (R$)
+3
+R$ 272,70
+TCSA3
+Quantidade
+Valor Bruto (R$)
+31
+R$ 173,29
+RANI3
+Quantidade
+Valor Bruto (R$)
+25
+R$ 217,25
+TEND3
+Quantidade
+Valor Bruto (R$)
+175
+R$ 2.948,75
+CPF 144.871.377-30 / Conta 57100470
+Extrato de posição em 09/11/2026
+
+MOTV3
+Quantidade
+Valor Bruto (R$)
+25
+R$ 383,75
+HCTR11
+Quantidade
+Valor Bruto (R$)
+390
+R$ 4.223,70
+WRLD11
+Quantidade
+Valor Bruto (R$)
+17
+R$ 2.646,05
+IRBR3
+Quantidade
+Valor Bruto (R$)
+39
+R$ 2.281,11
+DEVA11
+Quantidade
+Valor Bruto (R$)
+53
+R$ 807,72
+PNVL3
+Quantidade
+Valor Bruto (R$)
+41
+R$ 453,87
+ITSA4
+Quantidade
+Valor Bruto (R$)
+51
+R$ 683,40
+CMIG4
+Quantidade
+Valor Bruto (R$)
+49
+R$ 523,81
+JBSS32
+Quantidade
+Valor Bruto (R$)
+14
+R$ 1.016,40
+BOVA11
+CPF 144.871.377-30 / Conta 57100470
+Extrato de posição em 09/11/2026
+
+Quantidade
+Valor Bruto (R$)
+11
+R$ 1.866,37
+HODL11
+Quantidade
+Valor Bruto (R$)
+62
+R$ 4.285,44
+TSMC34
+Quantidade
+Valor Bruto (R$)
+4
+R$ 1.077,40
+IBIT39
+Quantidade
+Valor Bruto (R$)
+22
+R$ 1.714,02
+IB5M11
+Quantidade
+Valor Bruto (R$)
+28
+R$ 3.574,76
+MRVE3
+Quantidade
+Valor Bruto (R$)
+10
+R$ 45,50
+KNSC11
+Quantidade
+Valor Bruto (R$)
+100
+R$ 828,00
+Renda Fixa
+Valor Bruto
+R$ 9.497,82
+DEBENTURE VBRR11 VIA BRASIL BR 163 CONCESSIONARIA DE RODOVIAS S A
+Código Ativo Vencimento
+Aplicação
+Taxa
+Indexador
+Valor
+Aplicado (R$)
+IOF Previsto
+(R$)
+IR Previsto
+(R$)
+Valor Bruto
+(R$)
+Valor Mercado
+(16/11/2026)
+Valor Líquido
+(R$)
+VBRR11
+15/12/2030
+12/02/2025
+-
+IPCA
+R$ 1.139,25
+0,00
+0,00
+R$ 1.266,78
+R$ 1.208,13
+R$ 1.266,78
+CRA MARF E16S1 OPEA SECURITIZADORA S A
+CPF 144.871.377-30 / Conta 57100470
+Extrato de posição em 09/11/2026
+8,48%
+
+Código Ativo
+Vencimento
+Aplicação
+Taxa
+Indexador
+Valor
+Aplicado (R$)
+IOF Previsto
+(R$)
+IR Previsto
+(R$)
+Valor Bruto
+(R$)
+Valor Mercado
+(16/11/2026)
+Valor Líquido
+(R$)
+CRA021001PQ
+15/07/2028
+12/08/2024
+-
+IPCA
+R$ 1.111,41
+0,00
+0,00
+R$ 1.298,54
+R$ 1.191,64
+R$ 1.298,54
+CRI COGNA E242S2 OPEA SECURITIZADORA S A
+Código Ativo
+Vencimento
+Aplicação
+Taxa
+Indexador
+Valor
+Aplicado (R$)
+IOF Previsto
+(R$)
+IR Previsto
+(R$)
+Valor Bruto
+(R$)
+Valor Mercado
+(16/11/2026)
+Valor Líquido
+(R$)
+23K0022041
+16/11/2028
+07/11/2024
+13,10%
+PRE
+R$ 1.044,67
+0,00
+0,00
+R$ 1.051,20
+R$ 1.029,63
+R$ 1.051,20
+LCI DI FLUT TB BANCO ORIGINAL S A
+Código Ativo
+Vencimento
+Aplicação
+Taxa
+Indexador
+Valor
+Aplicado (R$)
+IOF Previsto
+(R$)
+IR Previsto
+(R$)
+Valor Bruto
+(R$)
+Valor Mercado
+(16/11/2026)
+Valor Líquido
+(R$)
+25D04299299
+19/04/2027
+28/04/2025
+95,00%
+CDI
+R$ 900,00
+0,00
+0,00
+R$ 1.096,69 -
+R$ 1.096,69
+CRA BRF E390S2 ECO SECURITIZADORA
+Código Ativo
+Vencimento
+Aplicação
+Taxa
+Indexador
+Valor
+Aplicado (R$)
+IOF Previsto
+(R$)
+IR Previsto
+(R$)
+Valor Bruto
+(R$)
+Valor Mercado
+(16/11/2026)
+Valor Líquido
+(R$)
+CRA0250020C
+16/04/2035
+04/06/2025
+-
+IPCA
+R$ 1.060,96
+0,00
+0,00
+R$ 1.112,60
+R$ 862,86
+R$ 1.112,60
+CRA MINERVA IPCA E125 S1 RIZA SEC
+Código Ativo
+Vencimento
+Aplicação
+Taxa
+Indexador
+Valor
+Aplicado (R$)
+IOF Previsto
+(R$)
+IR Previsto
+(R$)
+Valor Bruto
+(R$)
+Valor Mercado
+(16/11/2026)
+Valor Líquido
+(R$)
+CRA0220073P
+16/07/2029
+10/07/2024
+-
+IPCA
+R$ 1.126,84
+0,00
+0,00
+R$ 1.231,27
+R$ 1.097,52
+R$ 1.231,27
+CRI DASA E94 S3 VERT COMPANHIA SECURITIZADORA
+Código Ativo
+Vencimento
+Aplicação
+Taxa
+Indexador
+Valor
+Aplicado (R$)
+IOF Previsto
+(R$)
+IR Previsto
+(R$)
+Valor Bruto
+(R$)
+Valor Mercado
+(16/11/2026)
+Valor Líquido
+(R$)
+22J0306938
+15/10/2032
+06/08/2024
+-
+IPCA
+R$ 1.011,89
+0,00
+0,00
+R$ 1.128,22
+R$ 949,11
+R$ 1.128,22
+CDB DI FLUT TB BANCO AFINZ
+Código Ativo
+Vencimento
+Aplicação
+Taxa
+Indexador
+Valor
+Aplicado (R$)
+IOF Previsto
+(R$)
+IR Previsto
+(R$)
+Valor Bruto
+(R$)
+Valor Mercado
+(16/11/2026)
+Valor Líquido
+(R$)
+CDB1254S437
+05/07/2027
+14/01/2025
+112,00%
+CDI
+R$ 1.000,00 0,00
+54,69
+R$ 1.312,52
+-
+R$ 1.257,83
+Previdência
+Valor Bruto
+R$ 55.876,24
+ARCA GRÃO PREVIDÊNCIA FIC DE FIF RESP LTDA
+Tipo Produto
+Data Expedição
+Valor Bruto (R$)
+PGBL
+26/12/2025
+R$ 55.876,24
+CPF 144.871.377-30 / Conta 57100470
+Extrato de posição em 09/11/2026
+49,9%
+
+CPF 144.871.377-30 / Conta 57100470
+Extrato de posição em 09/11/2026
+Esse material foi preparado pelo Inter e destina-se exclusivamente de seus clientes acerca de seu patrimônio, não constituindo oferta de compra ou venda de títulos ou
+valores mobiliários. Este material não leva em consideração os objetivos de investimento, a situação financeira e as necessidades específicas de qualquer cliente em
+particular. Aqueles que desejam adquirir ou negociar quaisquer ativos financeiros devem obter as informações pertinentes para formarem sua própria convicção sobre o
+investimento. Fundos de Investimento não contam com garantia do administrador do fundo, do gestor da carteira, de qualquer mecanismo de seguro ou, ainda, do fundo
+garantidor de créditos - FGC. A rentabilidade obtida no passado não representa garantia de rentabilidade futura. É recomendada a leitura cuidadosa do Prospecto, quando
+disponível, e Regulamento do Fundo de Investimento pelo investidor ao aplicar seus recursos. As informações contidas neste documento referem-se à data em que o
+presente material foi disponibilizado e estão sujeitas a mudanças, não implicando necessariamente na obrigação de qualquer comunicação, atualização ou revisão do
+presente material.
+
+CPF 144.871.377-30 / Conta 57100470
+Extrato de posição em 09/11/2026
