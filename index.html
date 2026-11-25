@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>COS360 — Rebalanceamento Ótimo de Portfólio (MILP / CVaR)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- KaTeX para renderização matemática de alta qualidade -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+
+  <style>
+    /* === MANDATORY FIXED 16:9 STAGE (viewport-base.css) === */
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: var(--stage-bg, #18181b);
+    }
+    .deck-viewport {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      background: var(--stage-bg, #18181b);
+    }
+    .deck-stage {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      transform-origin: 0 0;
+      background: var(--slide-bg, #F7F6F2);
+    }
+    .slide {
+      position: absolute;
+      inset: 0;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      display: block;
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+      background: var(--slide-bg, #F7F6F2);
+      transition: opacity 0.35s ease;
+    }
+    .slide.active,
+    .slide.visible {
+      visibility: visible;
+      opacity: 1;
+      pointer-events: auto;
+      z-index: 1;
+    }
+    img, video, canvas, svg {
+      max-width: 100%;
+      max-height: 100%;
+    }
+    .deck-controls {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      transform: translateX(-50%);
+      z-index: 1000;
+    }
+    @media print {
+      html, body { width: 1920px; height: auto; overflow: visible; background: #fff; }
+      .deck-viewport { position: static; overflow: visible; background: #fff; }
+      .deck-stage { position: static; width: auto; height: auto; transform: none !important; background: none; }
+      .slide {
+        position: relative; display: block !important; visibility: visible !important;
+        opacity: 1 !important; pointer-events: auto !important;
+        width: 1920px; height: 1080px; break-after: page; page-break-after: always;
+      }
+      .slide:last-child { break-after: auto; page-break-after: auto; }
+      .deck-controls, .edit-toggle { display: none !important; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+      }
+    }
+
+    /* === SWISS QUANTITATIVE DESIGN SYSTEM === */
+    :root {
+      --stage-bg: #18181b;
+      --slide-bg: #F7F6F2;
+      --surface: #FFFFFF;
+      --ink: #111827;
+      --muted: #4B5563;
+      --accent: #1D4ED8;
+      --good: #059669;
+      --bad: #DC2626;
+      --rule: #D6D3CD;
+    }
+
+    .slide {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--ink);
+    }
+
+    .grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(17, 24, 39, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(17, 24, 39, 0.04) 1px, transparent 1px);
+      background-size: 80px 80px;
+      pointer-events: none;
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 2;
+      padding: 66px 110px 72px 110px;
+      height: 100%;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--ink);
+      padding-bottom: 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 18px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .top-bar .tag {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .slide-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 66px;
+      line-height: 1.02;
+      font-weight: 400;
+      margin: 20px 0 12px 0;
+      letter-spacing: -0.02em;
+    }
+
+    .slide-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .lead {
+      font-size: 25px;
+      line-height: 1.4;
+      color: var(--muted);
+      max-width: 1440px;
+      margin: 0;
+    }
+
+    /* Cover specifics */
+    .hero-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 100px;
+      line-height: 0.98;
+      font-weight: 400;
+      margin: 0 0 28px 0;
+      letter-spacing: -0.02em;
+      max-width: 1520px;
+    }
+    .hero-title em { font-style: italic; color: var(--accent); }
+
+    .metrics-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 28px;
+      border-top: 2px solid var(--rule);
+      padding-top: 28px;
+    }
+    .metric-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 15px;
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+    .metric-val {
+      font-size: 42px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .metric-val.good { color: var(--good); }
+    .metric-val.bad { color: var(--bad); }
+    .metric-val.accent { color: var(--accent); }
+
+    /* Cards & Grids */
+    .cols-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: stretch;
+      margin-top: 18px;
+      flex: 1;
+    }
+    .grid-2x2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 24px;
+      margin-top: 18px;
+      flex: 1;
+    }
+    .cols-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 24px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      border-radius: 12px;
+      padding: 28px 32px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+    .card.highlight { border-left: 6px solid var(--accent); }
+    .card.good-border { border-left: 6px solid var(--good); }
+    .card.bad-border { border-left: 6px solid var(--bad); }
+    .card h3 {
+      font-size: 25px;
+      font-weight: 700;
+      margin: 0 0 12px 0;
+    }
+    .card p, .card li {
+      font-size: 20px;
+      line-height: 1.48;
+      color: var(--muted);
+      margin: 0 0 8px 0;
+    }
+    .card ul {
+      margin: 0;
+      padding-left: 24px;
+    }
+
+    /* Math blocks */
+    .math-dark {
+      background: #111827;
+      color: #F9FAFB;
+      border-radius: 12px;
+      padding: 26px 36px;
+      margin-top: 14px;
+      font-size: 24px;
+    }
+    .math-dark .katex { color: #F9FAFB; }
+    .katex { font-size: 1.04em; }
+
+    .full-model-grid {
+      display: grid;
+      grid-template-columns: 1.55fr 1fr;
+      gap: 32px;
+      margin-top: 16px;
+      flex: 1;
+      align-items: stretch;
+    }
+    .full-model-box {
+      background: #111827;
+      color: #F9FAFB;
+      border-radius: 12px;
+      padding: 26px 34px;
+      font-size: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .full-model-box .katex { color: #F9FAFB; }
+
+    /* Tables */
+    table.quant-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      overflow: hidden;
+      font-size: 20px;
+    }
+    table.quant-table th {
+      background: #111827;
+      color: #F9FAFB;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 15px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 14px 18px;
+      text-align: left;
+    }
+    table.quant-table td {
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--rule);
+      color: var(--ink);
+    }
+    table.quant-table tr:last-child td { border-bottom: none; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .pos { color: var(--good); font-weight: 600; }
+    .neg { color: var(--bad); font-weight: 600; }
+
+    /* Image stage */
+    .img-frame {
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      border-radius: 12px;
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      min-height: 0;
+      margin-top: 14px;
+    }
+    .img-frame img {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    .footer-note {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 16px;
+      color: var(--muted);
+      border-top: 1px solid var(--rule);
+      padding-top: 14px;
+      margin-top: 14px;
+    }
+
+    /* Animations */
+    .slide.active .reveal {
+      animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    .slide.active .d1 { animation-delay: 0.06s; }
+    .slide.active .d2 { animation-delay: 0.14s; }
+    .slide.active .d3 { animation-delay: 0.22s; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Navigation & Edit Controls */
+    .deck-controls {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: rgba(17, 24, 39, 0.88);
+      backdrop-filter: blur(8px);
+      color: #F9FAFB;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      transition: opacity 0.4s ease;
+    }
+    .deck-controls.idle {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .deck-controls button {
+      background: rgba(255, 255, 255, 0.12);
+      border: none;
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 14px;
+    }
+    .deck-controls button:hover { background: rgba(255, 255, 255, 0.24); }
+    .edit-toggle {
+      position: fixed;
+      top: 14px;
+      left: 14px;
+      z-index: 1001;
+      background: rgba(17, 24, 39, 0.85);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .edit-toggle:hover, body.editing .edit-toggle { opacity: 1; }
+    body.editing [contenteditable="true"] {
+      outline: 2px dashed var(--accent);
+      outline-offset: 4px;
+    }
+  </style>
+</head>
+<body>
+  <button class="edit-toggle" id="editBtn" title="Pressione E para editar texto">Modo Edição (E)</button>
+
+  <div class="deck-viewport">
+    <div class="deck-stage" id="stage">
+
+      <!-- === SLIDE 1: CAPA === -->
+      <section class="slide active">
+        <div class="grid-bg"></div>
+        <div class="wrap">
+          <div class="top-bar reveal">
+            <span>UFRJ · Engenharia de Computação e Informação · COS360</span>
+            <span class="tag">Otimização · 5 min</span>
+          </div>
+          <div>
+            <h1 class="hero-title reveal d1">Rebalanceamento Ótimo de Portfólio com <em>Cardinalidade</em> e Gestão de Risco de Cauda</h1>
+            <p class="lead reveal d2">Saneamento de carteira real na B3 (42 ativos) via Programação Linear Inteira Mista (MILP / CVaR 95%) com custos de transação.</p>
+          </div>
+          <div class="metrics-4 reveal d3">
+            <div><div class="metric-label">Ativos na Carteira</div><div class="metric-val">42 → 10</div></div>
+            <div><div class="metric-label">Retorno Esperado</div><div class="metric-val good">+11,82% a.a.</div></div>
+            <div><div class="metric-label">Volatilidade</div><div class="metric-val good">5,81% a.a.</div></div>
+            <div><div class="metric-label">Autor / Professor</div><div class="metric-val" style="font-size:24px; line-height:1.3;">Gabriel Cauzin N. Pinto<br/><span style="font-weight:400; color:var(--muted); font-size:20px;">Prof. Luidi Simonetti</span></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- === SLIDE 2: INTRODUÇÃO TEÓRICA === -->
+      <section class="slide">
+        <div class="grid-bg"></div>
+        <div class="wrap">
+          <div class="top-bar reveal">
+            <span>1. Introdução Teórica</span>
+            <span class="tag">De Markowitz ao CVaR + MILP</span>
+          </div>
+          <div>
+            <h2 class="slide-title reveal d1">Limitações do modelo clássico de <em>Markowitz (1952)</em></h2>
+            <p class="lead reveal d2">A Programação Quadrática (QP) clássica minimiza $\mathbf{w}^T \Sigma \mathbf{w}$, mas falha em cenários reais de rebalanceamento.</p>
+          </div>
+          <div class="cols-3 reveal d3">
+            <div class="card bad-border">
+              <h3>1. Variância Simétrica</h3>
+              <p>Penaliza tanto retornos positivos quanto negativos, ignorando a assimetria e as <strong>caudas pesadas</strong> do mercado.</p>
+            </div>
+            <div class="card bad-border">
+              <h3>2. Pulverização ("Poeiras")</h3>
+              <p>Sem restrições inteiras, o modelo gera dezenas de posições minúsculas ($<1\%$), inviáveis operacionalmente.</p>
+            </div>
+            <div class="card highlight">
+              <h3>Nossa Abordagem</h3>
+              <p>Substituir a variância pelo <strong>CVaR 95% linearizado</strong> e impor <strong>cardinalidade ($K$)</strong> + custos de giro via MILP.</p>
+            </div>
+          </div>
+          <div class="footer-note">
+            <span>Fundamentação: Teoria Moderna de Portfólio vs. Gestão de Risco de Cauda</span>
+            <span>Slide 2 / 13</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- === SLIDE 3: FORMULAÇÃO MATEMÁTICA (1/4) - CONJUNTOS E VARIÁVEIS === -->
+      <section class="slide">
+        <div class="grid-bg"></div>
+        <div class="wrap">
+          <div class="top-bar reveal">
+            <span>2. Formulação Matemática (1/4)</span>
+            <span class="tag">Conjuntos, Parâmetros e Variáveis</span>
+          </div>
+          <div>
+            <h2 class="slide-title reveal d1">Notação e <em>Variáveis de Decisão</em></h2>
+          </div>
+          <div class="cols-2 reveal d2">
+            <div class="card" style="justify-content:center; padding:42px 46px;">
+              <h3 style="font-size:30px; margin-bottom:22px;">Conjuntos e Parâmetros</h3>
+              <ul style="display:flex; flex-direction:column; gap:16px;">
+                <li style="font-size:24px; line-height:1.45;">$\mathcal{I} = \{1, \dots, N\}$: ativos candidatos ($N = 42$).</li>
+                <li style="font-size:24px; line-height:1.45;">$\mathcal{S} = \{1, \dots, S\}$: cenários diários ($S = 246$ pregões).</li>
+                <li style="font-size:24px; line-height:1.45;">$w_i^0 \in [0, 1]$: peso inicial do ativo $i$ ($\sum w_i^0 = 1$).</li>
+                <li style="font-size:24px; line-height:1.45;">$\mu_i \in \mathbb{R}$: retorno esperado; $r_{i,s}$: retorno no dia $s$.</li>
+                <li style="font-size:24px; line-height:1.45;">$K$: cardinalidade máxima; $w_{\min} = 4\%$, $w_{\max} = 35\%$.</li>
+                <li style="font-size:24px; line-height:1.45;">$\alpha = 0{,}95$: confiança CVaR; $\lambda$: aversão ao giro.</li>
+              </ul>
+            </div>
+            <div class="card highlight" style="justify-content:center; padding:42px 46px;">
+              <h3 style="font-size:30px; margin-bottom:22px;">Variáveis de Decisão</h3>
+              <ul style="display:flex; flex-direction:column; gap:18px;">
+                <li style="font-size:24px; line-height:1.45;">$w_i \in [0, 1]$: novo peso ótimo do ativo $i$.</li>
+                <li style="font-size:24px; line-height:1.45;">$z_i \in \{0, 1\}$: binária ($1$ se o ativo $i$ for selecionado, $0$ caso contrário).</li>
+                <li style="font-size:24px; line-height:1.45;">$\Delta w_i^+, \Delta w_i^- \ge 0$: fração comprada e vendida do ativo $i$.</li>
+                <li style="font-size:24px; line-height:1.45;">$\eta \in \mathbb{R}$: Value-at-Risk (VaR) auxiliar no nível $\alpha$.</li>
+                <li style="font-size:24px; line-height:1.45;">$u_s \ge 0$: excesso de perda além de $\eta$ no cenário $s \in \mathcal{S}$.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="footer-note">
+            <span>Modelagem em Programação Linear Inteira Mista (MILP)</span>
+            <span>Slide 3 / 13</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- === SLIDE 4: FORMULAÇÃO MATEMÁTICA (2/4) - FUNÇÃO OBJETIVO === -->
+      <section class="slide">
+        <div class="grid-bg"></div>
+        <div class="wrap">
+          <div class="top-bar reveal">
+            <span>2. Formulação Matemática (2/4)</span>
+            <span class="tag">Função Objetivo · Rockafellar-Uryasev</span>
+          </div>
+          <div>
+            <h2 class="slide-title reveal d1">Minimização do <em>CVaR Linearizado</em> + Turnover</h2>
+            <p class="lead reveal d2">Pela formulação de Rockafellar &amp; Uryasev (2000), o CVaR é expresso de forma 100% linear sobre os cenários históricos.</p>
+          </div>
+          <div class="math-dark reveal d3">
+            $$\min_{w, z, \Delta w^+, \Delta w^-, \eta, u} \quad \underbrace{\eta + \frac{1}{(1 - \alpha) S} \sum_{s \in \mathcal{S}} u_s}_{\text{CVaR}_{\alpha} \text{ (Risco de Cauda)}} \;+\; \underbrace{\lambda \sum_{i \in \mathcal{I}} \left(\Delta w_i^+ + \Delta w_i^-\right)}_{\text{Custo de Giro (Turnover)}}$$
+          </div>
+          <div class="cols-2 reveal d3" style="margin-top:20px; flex:0;">
+            <div class="card">
+              <h3>Por que linear?</h3>
+              <p>Evita matrizes de covariância quadráticas ($N \times N$), tornando o problema tratável mesmo com variáveis binárias $z_i$.</p>
+            </div>
+            <div class="card good-border">
+              <h3>Foco nos 5% piores dias</h3>
+              <p>Com $\alpha = 0{,}95$, $u_s$ captura apenas as perdas que excedem o $\text{VaR}_{95\%}$ ($\eta$), protegendo a cauda esquerda.</p>
+            </div>
+          </div>
+          <div class="footer-note">
+            <span>Função objetivo linearizada com penalização de custos de transação</span>
+            <span>Slide 4 / 13</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- === SLIDE 5: FORMULAÇÃO MATEMÁTICA (3/4) - RESTRIÇÕES === -->
+      <section class="slide">
+        <div class="grid-bg"></div>
+        <div class="wrap">
+          <div class="top-bar reveal">
+            <span>2. Formulação Matemática (3/4)</span>
+            <span class="tag">Restrições Estruturais MILP</span>
+          </div>
+          <div>
+            <h2 class="slide-title reveal d1">Papel de cada bloco de <em>Restrições</em></h2>
+          </div>
+          <div class="grid-2x2 reveal d2">
+            <div class="card highlight">
+              <h3>1. Orçamento e Retorno Alvo</h3>
+              <p style="color:var(--ink); font-size:23px; margin:8px 0;">$$\sum_{i \in \mathcal{I}} w_i = 1, \qquad \sum_{i \in \mathcal{I}} \mu_i w_i \ge R_{\text{alvo}}$$</p>
+              <p>Garante alocação total do capital ($100\%$) e exige retorno esperado mínimo para a carteira saneada.</p>
+            </div>
+            <div class="card highlight">
+              <h3>2. Cardinalidade e Big-M (Piso/Teto)</h3>
+              <p style="color:var(--ink); font-size:23px; margin:8px 0;">$$\sum_{i \in \mathcal{I}} z_i \le K, \qquad w_{\min} z_i \le w_i \le w_{\max} z_i$$</p>
+              <p>Limita a carteira a no máximo $K$ ativos e elimina "poeiras" impondo $w_{\min}=4\%$ quando $z_i=1$.</p>
+            </div>
+            <div class="card">
+              <h3>3. Balanço de Fluxo (Turnover)</h3>
+              <p style="color:var(--ink); font-size:23px; margin:8px 0;">$$w_i - w_i^0 = \Delta w_i^+ - \Delta w_i^-, \quad \Delta w_i^+, \Delta w_i^- \ge 0$$</p>
+              <p>Lineariza $|w_i - w_i^0|$ separando compras ($\Delta w_i^+$) e vendas ($\Delta w_i^-$) a partir da posição inicial.</p>
+            </div>
+            <div class="card good-border">
+              <h3>4. Linearização de Cauda (CVaR)</h3>
+              <p style="color:var(--ink); font-size:23px; margin:8px 0;">$$u_s \ge -\sum_{i \in \mathcal{I}} r_{i,s} w_i - \eta, \quad u_s \ge 0 \;\;\forall s \in \mathcal{S}$$</p>
+              <p>Define $u_s = \max(0, \text{Perda}_s - \eta)$ para cada um dos $S=246$ cenários históricos.</p>
+            </div>
+          </div>
+          <div class="footer-note">
+            <span>Restrições lineares + acoplamento inteiro via variáveis binárias</span>
+            <span>Slide 5 / 13</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- === SLIDE 6: FORMULAÇÃO MATEMÁTICA (4/4) - MODELO COMPLETO === -->
+      <section class="slide">
+        <div class="grid-bg"></div>
+        <div class="wrap">
+          <div class="top-bar reveal">
+            <span>2. Formulação Matemática (4/4)</span>
+            <span class="tag">Modelo MILP Completo</span>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; flex:1;">
+            <div class="full-model-box reveal d1" style="width:100%; max-width:1420px; padding:42px 56px; font-size:28px; box-sizing:border-box;">
+              $$\begin{aligned}
+              \min_{w, z, \Delta w^+, \Delta w^-, \eta, u} \quad & \eta + \frac{1}{(1 - \alpha) S} \sum_{s \in \mathcal{S}} u_s + \lambda \sum_{i \in \mathcal{I}} (\Delta w_i^+ + \Delta w_i^-) \\[10pt]
+              \text{s.a.} \quad & \sum_{i \in \mathcal{I}} w_i = 1 \\
+              & \sum_{i \in \mathcal{I}} \mu_i w_i \ge R_{\text{alvo}} \\
+              & \sum_{i \in \mathcal{I}} z_i \le K \\
+              & w_{\min} z_i \le w_i \le w_{\max} z_i && \forall i \in \mathcal{I} \\
+              & w_i - w_i^0 = \Delta w_i^+ - \Delta w_i^- && \forall i \in \mathcal{I} \\
+              & u_s \ge -\sum_{i \in \mathcal{I}} r_{i,s} w_i - \eta && \forall s \in \mathcal{S} \\
+              & w_i \in [0,1], \; z_i \in \{0,1\}, \; \Delta w_i^\pm \ge 0, \; u_s \ge 0
+              \end{aligned}$$
+            </div>
+          </div>
+          <div class="footer-note">
+            <span>Formulação MILP Completa</span>
+            <span>Slide 6 / 13</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- === SLIDE 7: TOY PROBLEM === -->
+      <section class="slide">
+        <div class="grid-bg"></div>
+        <div class="wrap">
+          <div class="top-bar reveal">
+            <span>3. Exemplo Didático Passo a Passo</span>
+            <span class="tag">Toy Problem: N = 3, K = 2</span>
+          </div>
+          <div>
+            <h2 class="slide-title reveal d1">Validação em <em>escala reduzida</em></h2>
+            <p class="lead reveal d2">Instância sintética ($S=50$ cenários, $K=2$, $w_{\min}=15\%$, $w_{\max}=85\%$, $R_{\text{alvo}}=11\%$) para verificar o Branch &amp; Bound.</p>
+          </div>
+          <div class="reveal d3" style="margin-top:20px;">
+            <table class="quant-table">
+              <thead>
+                <tr>
+                  <th>Ativo Sintético</th>
+                  <th>Retorno ($\mu$) / Vol ($\sigma$)</th>
+                  <th>Inicial ($w^0$)</th>
+                  <th>Ótimo ($w^*$)</th>
+                  <th>Variação ($\Delta w$)</th>
+                  <th>Binária ($z^*$)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Ativo_A (Ações)</strong></td>
+                  <td class="mono">$\mu=18\%$ / $\sigma=40\%$</td>
+                  <td class="mono">10,00%</td>
+                  <td class="mono pos">37,96%</td>
+                  <td class="mono pos">+27,96%</td>
+                  <td class="mono">1 (Mantido)</td>
+                </tr>
+                <tr>
+                  <td><strong>Ativo_B (FIIs)</strong></td>
+                  <td class="mono">$\mu=12\%$ / $\sigma=30\%$</td>
+                  <td class="mono">5,00%</td>
+                  <td class="mono neg">0,00%</td>
+                  <td class="mono neg">-5,00%</td>
+                  <td class="mono">0 (Eliminado)</td>
+                </tr>
+                <tr>
+                  <td><strong>Ativo_C (Renda Fixa)</strong></td>
+                  <td class="mono">$\mu=8\%$ / $\sigma=20\%$</td>
+                  <td class="mono">85,00%</td>
+                  <td class="mono">62,04%</td>
+                  <td class="mono neg">-22,96%</td>
+                  <td class="mono">1 (Mantido)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="footer-note">
+            <span>Status HiGHS: optimal · Retorno atingido: 11,80% a.a. (≥ 11% alvo)</span>
+            <span>Slide 7 / 13</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- === SLIDE 8: ESTUDO DE CASO REAL (42 ATIVOS) === -->
+      <section class="slide">
+        <div class="grid-bg"></div>
+        <div class="wrap">
+          <div class="top-bar reveal">
+            <span>4. Estudo de Caso Real (B3 · R$ 46.611,64)</span>
+            <span class="tag">42 Ativos → K = 10</span>
+          </div>
+          <div>
+            <h2 class="slide-title reveal d1">Diagnóstico vs. <em>Solução Ótima Global</em></h2>
+            <p class="lead reveal d2">Carteira inicial com 16 de 42 ativos abaixo de 1%. O solver HiGHS encontrou o ótimo global em <strong>0,2671 segundos</strong>.</p>
+          </div>
+          <div class="metrics-4 reveal d3" style="margin-top:32px;">
+            <div class="card good-border">
+              <div class="metric-label">Retorno Esperado</div>
+              <div class="metric-val good">+11,82% a.a.</div>
+              <p style="font-size:19px; margin-top:8px;">Antes: <span class="neg">-2,08% a.a.</span></p>
+            </div>
+            <div class="card good-border">
+              <div class="metric-label">Volatilidade Anual</div>
+              <div class="metric-val good">5,81% a.a.</div>
+              <p style="font-size:19px; margin-top:8px;">Antes: 13,39% a.a. (-56%)</p>
+            </div>
+            <div class="card highlight">
+              <div class="metric-label">CVaR 95% Diário</div>
+              <div class="metric-val accent">0,57%</div>
+              <p style="font-size:19px; margin-top:8px;">Risco de cauda controlado</p>
+            </div>
+            <div class="card">
+              <div class="metric-label">Tempo / Turnover</div>
+              <div class="metric-val">0,2671 s</div>
+              <p style="font-size:19px; margin-top:8px;">Giro de capital: 67,09%</p>
+            </div>
+          </div>
+          <div class="footer-note">
+            <span>31 de 42 ativos liquidados integralmente · 10 ativos selecionados</span>
+            <span>Slide 8 / 13</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- === SLIDE 9: ANÁLISE DOS RESULTADOS - ANTES VS DEPOIS === -->
+      <section class="slide">
+        <div class="grid-bg"></div>
+        <div class="wrap">
+          <div class="top-bar reveal">
+            <span>5. Análise dos Resultados (1/3)</span>
+            <span class="tag">Comparativo Visual</span>
+          </div>
+          <div>
+            <h2 class="slide-title reveal d1" style="font-size:56px; margin-top:12px; margin-bottom:6px;">De 42 ativos pulverizados para <em>10 posições</em></h2>
+          </div>
+          <div class="img-frame reveal d2">
+            <img src="slides_assets/fig_01_cell_12.png" alt="Comparativo Carteira Inicial vs Carteira Ótima Saneada" />
+          </div>
+          <div class="footer-note">
+            <span>"Outros (33 ativos)" representavam 41,0% da carteira inicial</span>
+            <span>Slide 9 / 13</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- === SLIDE 10: COMPOSIÇÃO DA CARTEIRA SANEADA === -->
+      <section class="slide">
+        <div class="grid-bg"></div>
+        <div class="wrap">
+          <div class="top-bar reveal">
+            <span>5. Análise dos Resultados (2/3)</span>
+            <span class="tag">Composição Detalhada (K = 10)</span>
+          </div>
+          <div>
+            <h2 class="slide-title reveal d1" style="font-size:58px; margin-top:14px; margin-bottom:14px;">Alocação ótima com piso <em>$w_{\min} = 4\%$</em></h2>
+          </div>
+          <div class="cols-2 reveal d2" style="margin-top:8px;">
+            <table class="quant-table">
+              <thead>
+                <tr><th>Ativo</th><th>Inicial</th><th>Ótimo ($w^*$)</th><th>$\Delta w$</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>IB5M11</strong></td><td class="mono">7,67%</td><td class="mono pos">25,11%</td><td class="mono pos">+17,44%</td></tr>
+                <tr><td><strong>KNCR11</strong></td><td class="mono">1,76%</td><td class="mono pos">18,18%</td><td class="mono pos">+16,42%</td></tr>
+                <tr><td><strong>GPUS11</strong></td><td class="mono">8,11%</td><td class="mono pos">13,00%</td><td class="mono pos">+4,89%</td></tr>
+                <tr><td><strong>KNIP11</strong></td><td class="mono">0,92%</td><td class="mono pos">12,61%</td><td class="mono pos">+11,68%</td></tr>
+                <tr><td><strong>WRLD11</strong></td><td class="mono">5,68%</td><td class="mono pos">8,70%</td><td class="mono pos">+3,02%</td></tr>
+              </tbody>
+            </table>
+            <table class="quant-table">
+              <thead>
+                <tr><th>Ativo</th><th>Inicial</th><th>Ótimo ($w^*$)</th><th>$\Delta w$</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>VRTA11</strong></td><td class="mono">0,97%</td><td class="mono pos">6,30%</td><td class="mono pos">+5,34%</td></tr>
+                <tr><td><strong>VWRA11</strong></td><td class="mono">4,10%</td><td class="mono">4,10%</td><td class="mono">0,00%</td></tr>
+                <tr><td><strong>GOLD11</strong></td><td class="mono">1,07%</td><td class="mono pos">4,00%</td><td class="mono pos">+2,93%</td></tr>
+                <tr><td><strong>RANI3</strong></td><td class="mono">0,47%</td><td class="mono pos">4,00%</td><td class="mono pos">+3,53%</td></tr>
+                <tr><td><strong>JBSS32</strong></td><td class="mono">2,18%</td><td class="mono pos">4,00%</td><td class="mono pos">+1,82%</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="footer-note">
+            <span>Combinação de Renda Fixa/Inflação (IB5M11), FIIs de papel (KNCR11, KNIP11) e ETFs globais</span>
+            <span>Slide 10 / 13</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- === SLIDE 11: REBALANCEAMENTO VENDAS VS APORTES === -->
+      <section class="slide">
+        <div class="grid-bg"></div>
+        <div class="wrap">
+          <div class="top-bar reveal">
+            <span>5. Análise dos Resultados (3/3)</span>
+            <span class="tag">Vendas vs. Aportes</span>
+          </div>
+          <div>
+            <h2 class="slide-title reveal d1" style="font-size:56px; margin-top:12px; margin-bottom:6px;">Liquidação de <em>poeiras</em> e ativos de alto risco</h2>
+          </div>
+          <div class="img-frame reveal d2">
+            <img src="slides_assets/fig_02_cell_13.png" alt="Rebalanceamento Ótimo: Vendas vs Aportes" />
+          </div>
+          <div class="footer-note">
+            <span>Principais saídas: HODL11 (-9,19%), HCTR11 (-9,06%), TEND3 (-6,33%), IRBR3 (-4,89%)</span>
+            <span>Slide 11 / 13</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- === SLIDE 12: ANÁLISE DE SENSIBILIDADE === -->
+      <section class="slide">
+        <div class="grid-bg"></div>
+        <div class="wrap">
+          <div class="top-bar reveal">
+            <span>6. Análise de Sensibilidade</span>
+            <span class="tag">Trade-off: K vs. CVaR &amp; Turnover</span>
+          </div>
+          <div>
+            <h2 class="slide-title reveal d1" style="font-size:56px; margin-top:12px; margin-bottom:6px;">Por que <em>$K = 10$</em> é o ponto de equilíbrio ideal?</h2>
+          </div>
+          <div class="img-frame reveal d2">
+            <img src="slides_assets/fig_03_cell_16.png" alt="Curva de Trade-off: Risco de Cauda vs Cardinalidade" />
+          </div>
+          <div class="footer-note">
+            <span>Para K ≥ 11, o CVaR satura (~0,55%) sem ganho marginal relevante que justifique mais ativos</span>
+            <span>Slide 12 / 13</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- === SLIDE 13: CONCLUSÃO === -->
+      <section class="slide">
+        <div class="grid-bg"></div>
+        <div class="wrap">
+          <div class="top-bar reveal">
+            <span>7. Conclusão</span>
+            <span class="tag">COS360 · UFRJ</span>
+          </div>
+          <div>
+            <h2 class="slide-title reveal d1">Saneamento <em>ótimo</em>, rápido e acionável</h2>
+          </div>
+          <div class="cols-3 reveal d2">
+            <div class="card good-border">
+              <h3>Eficiência Risco-Retorno</h3>
+              <p>Retorno saltou de <strong>-2,08% para +11,82% a.a.</strong> com redução de 56% na volatilidade (13,39% → 5,81%).</p>
+            </div>
+            <div class="card highlight">
+              <h3>Tratabilidade MILP</h3>
+              <p>Linearização do CVaR permitiu resolver 42 ativos + restrições inteiras para otimalidade global em <strong>0,27s</strong>.</p>
+            </div>
+            <div class="card">
+              <h3>Gestão Prática</h3>
+              <p>Eliminou 31 ativos residuais/arriscados, mantendo diversificação real com apenas <strong>10 posições</strong>.</p>
+            </div>
+          </div>
+          <div class="footer-note">
+            <span>Obrigado! · Gabriel Cauzin Nobre Pinto (DRE: 124026964)</span>
+            <span>Slide 13 / 13</span>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <div class="deck-controls">
+    <button id="prevBtn" title="Anterior (←)">←</button>
+    <span id="counter">1 / 13</span>
+    <button id="nextBtn" title="Próximo (→ / Espaço)">→</button>
+  </div>
+
+  <script>
+    /* === FIXED 16:9 STAGE SCALING === */
+    const stage = document.getElementById('stage');
+    function fitStage() {
+      const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+      const x = (window.innerWidth - 1920 * scale) / 2;
+      const y = (window.innerHeight - 1080 * scale) / 2;
+      stage.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
+    }
+    window.addEventListener('resize', fitStage);
+    fitStage();
+
+    /* === SLIDE NAVIGATION === */
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const counter = document.getElementById('counter');
+    let current = 0;
+
+    function showSlide(idx) {
+      current = Math.max(0, Math.min(slides.length - 1, idx));
+      slides.forEach((s, i) => s.classList.toggle('active', i === current));
+      counter.textContent = `${current + 1} / ${slides.length}`;
+    }
+
+    document.getElementById('prevBtn').addEventListener('click', () => showSlide(current - 1));
+    document.getElementById('nextBtn').addEventListener('click', () => showSlide(current + 1));
+
+    /* === AUTO-HIDE CONTROLS ON IDLE === */
+    const controls = document.querySelector('.deck-controls');
+    let idleTimer;
+    function resetIdle() {
+      controls.classList.remove('idle');
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(() => controls.classList.add('idle'), 1800);
+    }
+    window.addEventListener('mousemove', resetIdle);
+    window.addEventListener('mousedown', resetIdle);
+    resetIdle();
+
+    document.addEventListener('keydown', (e) => {
+      if (document.body.classList.contains('editing') && e.key !== 'Escape') return;
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        showSlide(current + 1);
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        showSlide(current - 1);
+      } else if (e.key === 'e' || e.key === 'E') {
+        toggleEdit();
+      }
+    });
+
+    /* === INLINE EDITING === */
+    const editBtn = document.getElementById('editBtn');
+    function toggleEdit() {
+      const editing = document.body.classList.toggle('editing');
+      editBtn.textContent = editing ? 'Sair da Edição (Esc)' : 'Modo Edição (E)';
+      document.querySelectorAll('h1, h2, h3, p, td, th, .metric-val, .metric-label, .top-bar span, .footer-note span').forEach(el => {
+        el.contentEditable = editing ? 'true' : 'false';
+      });
+    }
+    editBtn.addEventListener('click', toggleEdit);
+  </script>
+</body>
+</html>
